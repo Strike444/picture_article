@@ -17,11 +17,21 @@ public class DirScanner {
         if (OS.equals("Linux")) {
             System.out.println("It uses Linux");
             path = HOME + "/picture_article";
+            f = new File(path);
+            if (f.exists() && f.isDirectory()) {
+            } else {
+                f.mkdirs();
+            }
         } else {
             if (OS.matches("Windows.*")) {
                 System.out.println("It uses Windows");
                 path = "d:\\" + "picture_article";
-                System.out.println("Path: \"" + path +"\"");
+                System.out.println("Path: \"" + path + "\"");
+                f = new File(path);
+                if (f.exists() && f.isDirectory()) {
+                } else {
+                    f.mkdirs();
+                }
             }
         }
         return path;
@@ -32,17 +42,22 @@ public class DirScanner {
         File[] filesindir = f.listFiles();
         ArrayList<File> listfiles = new ArrayList<>();
         ArrayList<String> listdocfiles = new ArrayList<>();
-        for (int i = 0; i < filesindir.length; i++) {
-            listfiles.add(i, filesindir[i]);
-        }
-        for (int i = 0; i < listfiles.size(); i++) {
-            if (listfiles.get(i).toString().matches(".*.doc")) {
-                System.out.println(".doc file: " + listfiles.get(i) +"\"");
-                listdocfiles.add(listfiles.get(i).toString());
+        if (filesindir != null) {
+            for (int i = 0; i < filesindir.length; i++) {
+                listfiles.add(i, filesindir[i]);
             }
+            for (int i = 0; i < listfiles.size(); i++) {
+                if (listfiles.get(i).toString().matches(".*.doc")) {
+                    System.out.println(".doc file: " + listfiles.get(i) + "\"");
+                    listdocfiles.add(listfiles.get(i).toString());
+                }
+            }
+            String[] masDoc = listdocfiles.toArray(new String[listdocfiles.size()]);
+            return masDoc;
+        } else {
+            System.out.println("Нет .doc файлов в " + path + ".");
+            return new String[0];
         }
-        String[] masDoc = listdocfiles.toArray(new String[listdocfiles.size()]);
-        return masDoc;
     }
 
     public String[] getMasJpg(String pds) {
@@ -50,17 +65,22 @@ public class DirScanner {
         File[] filesindir = f.listFiles();
         ArrayList<File> listfiles = new ArrayList<>();
         ArrayList<String> listdocfiles = new ArrayList<>();
-        for (int i = 0; i < filesindir.length; i++) {
-            listfiles.add(i, filesindir[i]);
-        }
-        for (int i = 0; i < listfiles.size(); i++) {
-            if (listfiles.get(i).toString().matches(".*.jpg")) {
-                System.out.println(".jpg file: " + listfiles.get(i) +"\"");
-                listdocfiles.add(listfiles.get(i).toString());
+        if (filesindir != null) {
+            for (int i = 0; i < filesindir.length; i++) {
+                listfiles.add(i, filesindir[i]);
             }
+            for (int i = 0; i < listfiles.size(); i++) {
+                if (listfiles.get(i).toString().matches(".*.jpg")) {
+                    System.out.println(".jpg file: " + listfiles.get(i) + "\"");
+                    listdocfiles.add(listfiles.get(i).toString());
+                }
+            }
+            String[] masJpg = listdocfiles.toArray(new String[listdocfiles.size()]);
+            return masJpg;
+        } else {
+            System.out.println("Нет .jpg файлов в " + path + ".");
+            return new String[0];
         }
-        String[] masJpg = listdocfiles.toArray(new String[listdocfiles.size()]);
-        return masJpg;
     }
 }
 
