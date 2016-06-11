@@ -5,9 +5,9 @@ package ru.andreyshimanovich.picture_article;
  */
 public class GetText {
     private String[] pdoc;
-    public GetText(String[] s) {
-        pdoc = s;
-        paths(pdoc);
+    public GetText(String[] pdoc) {
+        this.pdoc = pdoc;
+        paths(this.pdoc);
     }
 
     private void paths(String[] s) {
