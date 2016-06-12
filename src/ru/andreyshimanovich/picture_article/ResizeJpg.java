@@ -24,8 +24,19 @@ public class ResizeJpg {
             long lm = file.lastModified();
             System.out.println(lm);
             BufferedImage im = ImageIO.read(file);
-            File output = new File(file.getPath() + "111" + file.getName());
-            ImageIO.write(im, "JPG", output);
+            int scaleW = im.getWidth();
+            System.out.println("Ширина картинки: "  + scaleW);
+            int scaleH = im.getHeight();
+            System.out.println("Высота картинки: " + scaleH);
+            int newHmin = 150;
+            int newWmin = (150 * scaleW) / scaleH;
+            int newW = 1024;
+            int newH = (1024 * scaleH) / scaleW;
+            System.out.println("Новая ширина для миниатюры: " + newWmin + "\n" + "Новая высота для миниатюры: " + newHmin);
+            System.out.println("Новая ширина: " + newW + "\n" + "Новая высота: " + newH);
+//            Image scaledInstance = im.getScaledInstance(800,600,1);
+//            File output = new File(file.getPath() + "111" + file.getName());
+//            ImageIO.write(im, "JPG", output);
 
             //TODO Отсортировать от наименьшего к наибольшему и переименовать.
 //            BufferedImage im = new BufferedImage(3000, 2000, BufferedImage.TYPE_INT_ARGB);
