@@ -6,6 +6,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
@@ -34,6 +35,12 @@ public class ResizeJpg {
             int newH = (1024 * scaleH) / scaleW;
             System.out.println("Новая ширина для миниатюры: " + newWmin + "\n" + "Новая высота для миниатюры: " + newHmin);
             System.out.println("Новая ширина: " + newW + "\n" + "Новая высота: " + newH);
+            BufferedImage scaled = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_RGB);
+            Graphics2D g = scaled.createGraphics();
+            g.drawImage(im, 0, 0, newW, newH, null);
+            g.dispose();
+            ImageIO.write(scaled, "JPEG", new File(s + ".jpg"));
+
 //            Image scaledInstance = im.getScaledInstance(800,600,1);
 //            File output = new File(file.getPath() + "111" + file.getName());
 //            ImageIO.write(im, "JPG", output);
