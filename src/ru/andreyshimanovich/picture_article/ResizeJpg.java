@@ -15,18 +15,23 @@ import java.io.*;
  */
 public class ResizeJpg {
     private String[] masJpg;
+
     public ResizeJpg(String[] masJpg) throws IOException {
         this.masJpg = masJpg;
         resize(this.masJpg);
     }
+
     private void resize(String[] masJpg) throws IOException {
-        for (String s: masJpg ) {
+        final String OS = System.getProperty("os.name");
+        int i = 1;
+        for (String s : masJpg) {
             File file = new File(s);
             long lm = file.lastModified();
             System.out.println(lm);
+            System.out.println(file.toPath().getParent());
             BufferedImage im = ImageIO.read(file);
             int scaleW = im.getWidth();
-            System.out.println("Ширина картинки: "  + scaleW);
+            System.out.println("Ширина картинки: " + scaleW);
             int scaleH = im.getHeight();
             System.out.println("Высота картинки: " + scaleH);
             int newHmin = 150;
@@ -39,13 +44,30 @@ public class ResizeJpg {
             Graphics2D g = scaled.createGraphics();
             g.drawImage(im, 0, 0, newW, newH, null);
             g.dispose();
-            ImageIO.write(scaled, "JPEG", new File(s + ".jpg"));
+            if (OS.equals("Linux")) {
+//                System.out.println("! " + file.getPath());
+//                System.out.println(file.getPath().length());
+//                System.out.println("! " + file.getParent() + "/" + i + ".jpg");
+//                System.out.println((file.getParent() + "/" + i + ".jpg").length());
+                if (file.getPath().toString().equals(file.getParent() + "/" + i + ".jpg")) {
+                    System.out.println("* Найдено сопадение имен исходного " + file.getName() + " и выходного файлов " +
+                    i + ".jpg");
+                    System.out.println("Выполняю переименование исходного файла " + file.getName());
+                    String ishFile = new String(file.getPath().toString().replaceAll(".jpg","_ish.jpg"));
+                    System.out.println("тра ля ля " + ishFile);
+                    file.renameTo(new File(ishFile));
+                }
+                ImageIO.write(scaled, "JPEG", new File(file.getParent() + "/" + i + ".jpg"));
+            } else if (OS.matches("Windows.*")){
+                ImageIO.write(scaled, "JPEG", new File(file.getParent() + "\\" + i + ".jpg"));
+            }
+            i++;
 
+            //TODO Реализовать архивирование исходных файлов
 //            Image scaledInstance = im.getScaledInstance(800,600,1);
 //            File output = new File(file.getPath() + "111" + file.getName());
 //            ImageIO.write(im, "JPG", output);
 
-            //TODO Отсортировать от наименьшего к наибольшему и переименовать.
 //            BufferedImage im = new BufferedImage(3000, 2000, BufferedImage.TYPE_INT_ARGB);
 //            OutputStream output = new FileOutputStream("resize" + s);
 //            JPEGImageEncoder jpegEncoder = JPEGCodec.createJPEGEncoder(output);
