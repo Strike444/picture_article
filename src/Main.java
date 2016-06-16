@@ -13,6 +13,7 @@ public class Main {
     public static void main(String args[]) throws IOException {
         DirScanner dr = new DirScanner();
         String dir = dr.PathDirScanner();
+        dr.lowNames(dir);
         String[] masDoc = dr.getMasDoc(dir);
         String[] masJpg = dr.getMasJpg(dir);
         GetText gt = new GetText(masDoc);

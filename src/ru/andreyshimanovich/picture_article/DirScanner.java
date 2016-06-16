@@ -12,6 +12,28 @@ public class DirScanner {
     private String path;
     private File f;
 
+    public void lowNames(String pds) {
+        File f = new File(pds);
+        File[] filesindir = f.listFiles();
+        ArrayList<File> listfiles = new ArrayList<>();
+        if (filesindir != null) {
+            for (int i = 0; i < filesindir.length; i++) {
+                listfiles.add(i, filesindir[i]);
+            }
+        }
+        if (OS.equals("Linux")) {
+            for (int i = 0; i < listfiles.size(); i++) {
+                listfiles.get(i).renameTo(new File(listfiles.get(i).getParent() + "/" + listfiles.get(i).getName().toLowerCase()));
+            }
+        } else {
+            if (OS.matches("Windows.*")) {
+                for (int i = 0; i < listfiles.size(); i++) {
+                    listfiles.get(i).renameTo(new File(listfiles.get(i).getParent() + "\\" + listfiles.get(i).getName().toLowerCase()));
+                }
+            }
+        }
+    }
+
     public String PathDirScanner() {
 
         if (OS.equals("Linux")) {
@@ -83,5 +105,3 @@ public class DirScanner {
         }
     }
 }
-
-
