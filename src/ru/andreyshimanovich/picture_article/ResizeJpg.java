@@ -7,6 +7,7 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.*;
 
@@ -40,15 +41,14 @@ public class ResizeJpg {
             int newH = (1024 * scaleH) / scaleW;
             System.out.println("Новая ширина для миниатюры: " + newWmin + "\n" + "Новая высота для миниатюры: " + newHmin);
             System.out.println("Новая ширина: " + newW + "\n" + "Новая высота: " + newH);
+
             BufferedImage scaled = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_RGB);
             Graphics2D g = scaled.createGraphics();
+            g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g.drawImage(im, 0, 0, newW, newH, null);
             g.dispose();
+
             if (OS.equals("Linux")) {
-//                System.out.println("! " + file.getPath());
-//                System.out.println(file.getPath().length());
-//                System.out.println("! " + file.getParent() + "/" + i + ".jpg");
-//                System.out.println((file.getParent() + "/" + i + ".jpg").length());
                 if (file.getPath().toString().equals(file.getParent() + "/" + i + ".jpg")) {
                     System.out.println("* Найдено сопадение имен исходного " + file.getName() + " и выходного файлов " +
                     i + ".jpg");
