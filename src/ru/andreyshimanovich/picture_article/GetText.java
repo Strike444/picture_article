@@ -14,7 +14,6 @@ public class GetText {
         for (String pathDoc:s
              ) {
             System.out.println(pathDoc);
-
         }
     }
 
