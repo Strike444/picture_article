@@ -20,13 +20,25 @@ public class ResizeJpg {
 
     public ResizeJpg(String[] masJpg) throws IOException {
         this.masJpg = masJpg;
-        ArrayList<String> filesForArh = resize(this.masJpg);
+        ArrayList<String> filesForArh = toArh(this.masJpg);
+        ArrayList<String> filesForDel = resize(this.masJpg);
         toZip(filesForArh);
-        delAfterZip(masJpg);
+        delAfterZip(filesForDel);
+    }
+
+    // Выбираю файлы для архивации
+    private ArrayList<String> toArh(String[] masJpg) {
+        ArrayList<String> masForArh = new ArrayList<String>();
+        for (String s : masJpg) {
+            File file = new File(s);
+            System.out.println("Помечаю файл для архива: " + file);
+            masForArh.add(file.toString());
+        }
+        return masForArh;
     }
 
     private ArrayList<String> resize(String[] masJpg) throws IOException {
-        int i = 1;
+        int i = 0;
         ArrayList<String> masOldJpg = new ArrayList<String>();
 
         for (String s : masJpg) {
@@ -59,20 +71,22 @@ public class ResizeJpg {
                     System.out.println("Выполняю переименование исходного файла " + file.getName());
                     String ishFile = new String(file.getPath().toString().replaceAll(".jpg", "_ish.jpg"));
                     System.out.println("Исходный файл после переименования: " + ishFile);
-                    masOldJpg.add(file.toString());
-                }
-                // Проверка на главыный файл
-                if (file.getPath().toString().equals(file.getParent() + "/" + "glav.jpg")) {
-                    System.out.println("Обнаружен главный файл: " + file.getPath());
-                    ImageIO.write(scaled, "JPEG", new File(file.getPath()));
-                    i--;
                 } else {
-                    System.out.println("Добовляю файл в список на архивацию и удаление" + file);
-                    masOldJpg.add(file.toString());
-                    ImageIO.write(scaled, "JPEG", new File(file.getParent() + "/" + i + ".jpg"));
+                    // Проверка на главыный файл
+                    if (file.getPath().toString().equals(file.getParent() + "/" + "glav.jpg")) {
+                        System.out.println("Обнаружен главный файл: " + file.getPath());
+                        ImageIO.write(scaled, "JPEG", new File(file.getPath()));
+                        i--;
+                    } else {
+                        System.out.println("Добовляю файл в список на удаление " + file);
+                        masOldJpg.add(file.toString());
+                        ImageIO.write(scaled, "JPEG", new File(file.getParent() + "/" + i + ".jpg"));
+                    }
                 }
-            } else if (OS.matches("Windows.*")) {
-                ImageIO.write(scaled, "JPEG", new File(file.getParent() + "\\" + i + ".jpg"));
+            } else {
+                if (OS.matches("Windows.*")) {
+                    ImageIO.write(scaled, "JPEG", new File(file.getParent() + "\\" + i + ".jpg"));
+                }
             }
             i++;
         }
@@ -80,16 +94,17 @@ public class ResizeJpg {
         return masOldJpg;
     }
 
+
     // Удаление файлов после архивации
-    private void delAfterZip (String[] s) {
-        for (int i = 0; i < s.length; i++) {
-            File f = new File(s[i]);
-            //TODO не канает. Удаляет файлы переименованные.
-//            if (f.exists()) {
-//                f.delete();
+    private void delAfterZip(ArrayList<String> masForDel) {
+        for (String s : masForDel
+                ) {
+            File f = new File(s);
+            if (f.exists()) {
+                f.delete();
             }
         }
-//    }
+    }
 
     private void toZip(ArrayList<String> al) throws IOException {
         if (OS.equals("Linux")) {
@@ -103,9 +118,6 @@ public class ResizeJpg {
             for (int i = 0; i < al.size(); i++) {
                 System.out.println("Добaвляю в архив: " + al.get(i));
                 add(zos, al.get(i));
-//                System.out.println("Удаляю файл: " + al.get(i));
-//                File f = new File(al.get(i));
-//                f.delete();
             }
             zos.close();
             fos.close();
@@ -115,8 +127,6 @@ public class ResizeJpg {
             for (int i = 0; i < al.size(); i++) {
                 System.out.println("Добавляю в архив: " + al.get(i));
                 add(zos, al.get(i));
-//                File f = new File(al.get(i));
-//                f.delete();
                 zos.close();
                 fos.close();
             }
