@@ -18,6 +18,8 @@ public class ResizeJpg {
     private final String OS = System.getProperty("os.name");
     private final String HOME = System.getProperty("user.home");
 
+    //TODO сделать проверку на ширину и если ширина меньше чем надо то не конвертировать
+
     public ResizeJpg(String[] masJpg) throws IOException {
         this.masJpg = masJpg;
         ArrayList<String> filesForArh = toArh(this.masJpg);
@@ -71,6 +73,7 @@ public class ResizeJpg {
                     System.out.println("Выполняю переименование исходного файла " + file.getName());
                     String ishFile = new String(file.getPath().toString().replaceAll(".jpg", "_ish.jpg"));
                     System.out.println("Исходный файл после переименования: " + ishFile);
+                    // TODO не конвентирует исходный файл
                 } else {
                     // Проверка на главыный файл
                     if (file.getPath().toString().equals(file.getParent() + "/" + "glav.jpg")) {
