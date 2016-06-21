@@ -7,6 +7,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Andrey Shimanovich on 05.06.2016.
@@ -32,8 +34,8 @@ public class GetText {
         }
     }
 
-    public ArrayList<String> paths(String[] s) throws IOException {
-        ArrayList<String> listDocTxt = new ArrayList<String>();
+    public Map<String, String> paths(String[] s) throws IOException {
+        Map<String, String> listDocTxt = new HashMap<String, String>();
         for (String pathDoc:s
              ) {
             File docFile = new File(pathDoc);
@@ -41,8 +43,9 @@ public class GetText {
             FileInputStream inpStrm = new FileInputStream(docFile);
             HWPFDocument wordDoc = new HWPFDocument(inpStrm);
             String st = wordDoc.getText().toString();
-            listDocTxt.add(st);
+            listDocTxt.put(docFile.toString(),st);
         }
+        // TODO тут что-то не то
         return listDocTxt;
     }
 }

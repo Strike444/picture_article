@@ -1,4 +1,4 @@
-package src;
+package ru.andreyshimanovich.picture_article;
 
 import ru.andreyshimanovich.picture_article.DirScanner;
 import ru.andreyshimanovich.picture_article.GetText;
@@ -7,6 +7,8 @@ import ru.andreyshimanovich.picture_article.ResizeJpg;
 
 import java.io.IOException;
 import java.util.AbstractList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Andrey Shimanovich on 05.06.2016.
@@ -21,7 +23,7 @@ public class Main {
         new ResizeJpg(masJpg);
         GetText gt = new GetText(masDoc);
         gt.sizePdoc();
-        AbstractList<String> arTxt = gt.paths(masDoc);
+        Map<String,String> arTxt = gt.paths(masDoc);
         ParseStringAndWrineTxt psawt = new ParseStringAndWrineTxt(arTxt);
     }
 }
