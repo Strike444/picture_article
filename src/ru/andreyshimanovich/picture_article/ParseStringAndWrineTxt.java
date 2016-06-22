@@ -9,59 +9,123 @@ import java.util.*;
  * Created by Andrey Shimanovich on 20.06.16.
  */
 public class ParseStringAndWrineTxt {
-    private Map<String,String> arTxt;
+    private Map<String, String> arTxt;
 
-    public ParseStringAndWrineTxt(Map<String,String> arTxt) throws FileNotFoundException {
+    public ParseStringAndWrineTxt(Map<String, String> arTxt) throws FileNotFoundException {
         this.arTxt = arTxt;
         parse(arTxt);
     }
 
-    private void parse(Map<String,String> arTxt) throws FileNotFoundException {
+    private void parse(Map<String, String> arTxt) throws FileNotFoundException {
 
         // Получаем набор элементов
         Set<Map.Entry<String, String>> set = arTxt.entrySet();
         for (Map.Entry<String, String> me : set) {
             String text = me.getValue();
-            //            System.out.print("# " + me.getKey() + ": ");
-//            System.out.println("#" + me.getValue());
 
+            String[] textmas = text.split("\r");
 
-            while (text.matches("\\s.*")) {
-                System.out.println("Устраняю лишние пробелы");
-                text = text.replaceFirst("\\s.*", "");
+            // Длинна массива
+//           System.out.println("S" + textmas.length);
+//
+//            //            System.out.print("# " + me.getKey() + ": ");
+////            System.out.println("#" + me.getValue());
+//
+//
+            for (int i = 0; i < textmas.length; i++) {
+                while (textmas[i].matches("\\s.*")) {
+                    System.out.println("Устраняю лишние пробелы");
+                    textmas[i] = textmas[i].replaceFirst("\\s.*", "");
+                }
             }
 
-            text = text.replaceAll("[\\u00A0\\s]+", " ");
-            text = text.trim();
 
-            if (text.matches(".*\u0013 HYPERLINK.*\u0001\u0014.*\u0015.*")) {
-                System.out.println("!!! Нашел линк");
-                int pos = text.indexOf('\u0013');
-                int posend = text.indexOf('\u0001');
-                String substring = text.substring(pos + 13, posend - 1);
-                System.out.println(substring);
-                int posNaz = text.indexOf('\u0014');
-                int posNazEnd = text.indexOf('\u0015');
-                String substringNaz = text.substring(posNaz + 1, posNazEnd);
-                System.out.println(substringNaz);
-                String substringNach = text.substring(0, pos);
-                String substringConec = text.substring(posNazEnd + 1, text.length());
-//                System.out.println(substringNach + "#" + substringConec);
-                text = substringNach + "<a href=" + substring + "\">" + substringNaz + "</a>" + substringConec;
-//              System.out.println(text);
+            for (int i = 0; i < textmas.length; i++) {
+                while (textmas[i].matches("\\s.*")) {
+                    System.out.println("Устраняю лишние пробелы");
+                    textmas[i] = textmas[i].replaceFirst("\\s.*", "");
+                }
             }
 
-            String[] masText = text.split("\r");
-            System.out.println("$$$" + masText.length);
+
+            for (int i = 0; i < textmas.length; i++) {
+                textmas[i] = textmas[i].replaceAll("[\\u00A0\\s]+", " ");
+            }
+
+            for (int i = 0; i < textmas.length; i++) {
+                textmas[i] = textmas[i].trim();
+            }
+
+            for (int i = 0; i < textmas.length; i++) {
+                if (textmas[i].matches(".*\u0013 HYPERLINK.*\u0001\u0014.*\u0015.*")) {
+                    System.out.println("!!! Нашел линк");
+                    int pos = textmas[i].indexOf('\u0013');
+                    int posend = textmas[i].indexOf('\u0001');
+                    String substring = textmas[i].substring(pos + 13, posend - 1);
+                    System.out.println(substring);
+                    int posNaz = textmas[i].indexOf('\u0014');
+                    int posNazEnd = textmas[i].indexOf('\u0015');
+                    String substringNaz = textmas[i].substring(posNaz + 1, posNazEnd);
+                    System.out.println(substringNaz);
+                    String substringNach = textmas[i].substring(0, pos);
+                    String substringConec = textmas[i].substring(posNazEnd + 1, textmas[i].length());
+                    System.out.println(substringNach + "#" + substringConec);
+                    textmas[i] = substringNach + "<a href=" + substring + "\">" + substringNaz + "</a>" + substringConec;
+                    System.out.println(textmas[i]);
+                }
+
+            }
+
+
+//                for (String s : textmas
+//                        ) {
+//                    while (s.matches("\\s.*")) {
+//                        System.out.println("Устраняю лишние пробелы");
+//                        s = s.replaceFirst("\\s.*", "");
+//                    }
+//                    // Не помню что делает
+//
+//                    s = s.replaceAll("[\\u00A0\\s]+", " ");
+//                    s = s.trim();
+//                    String b = "";
+//                    if (s.matches(".*\u0013 HYPERLINK.*\u0001\u0014.*\u0015.*")) {
+//                        System.out.println("!!! Нашел линк");
+//                        int pos = s.indexOf('\u0013');
+//                        int posend = s.indexOf('\u0001');
+//                        String substring = s.substring(pos + 13, posend - 1);
+//                        System.out.println(substring);
+//                        int posNaz = s.indexOf('\u0014');
+//                        int posNazEnd = s.indexOf('\u0015');
+//                        String substringNaz = s.substring(posNaz + 1, posNazEnd);
+//                        System.out.println(substringNaz);
+//                        String substringNach = s.substring(0, pos);
+//                        String substringConec = s.substring(posNazEnd + 1, s.length());
+////                System.out.println(substringNach + "#" + substringConec);
+//                        b = substringNach + "<a href=" + substring + "\">" + substringNaz + "</a>" + substringConec;
+////              System.out.println(text);
+//                        ;
+//                    }
+//                    s = b;
+//                }
+//
+//            for (String s : textmas
+//                    ) {
+//                System.out.println("$$$" + s);
+//            }
+
+
+//
+//
+            System.out.println("Длинна массива обзатцев: " + textmas.length);
             ArrayList<String> list = new ArrayList<>();
 
-            for (int k = 0; k < masText.length; k++) {
-                list.add(k, masText[k]);
+            for (int k = 0; k < textmas.length; k++) {
+                list.add(k, textmas[k]);
             }
 
             for (int f = 0; f < list.size(); f++) {
                 if (list.get(f).equals("")) {
-//                System.out.println("выловил пустое значение");
+                    System.out.println("выловил пустое значение");
                     list.remove(f);
                 }
             }
@@ -74,10 +138,11 @@ public class ParseStringAndWrineTxt {
             }
             for (int ffa = 0; ffa < list.size(); ffa++) {
                 if (list.get(ffa).length() == 0) {
-//                System.out.println("выловил еще значение с нулевой длинной");
+                    System.out.println("выловил еще значение с нулевой длинной");
                     list.remove(ffa);
                 }
             }
+
 
             // Запрос на адрес фидеофайла
             String adres = "";
@@ -85,31 +150,44 @@ public class ParseStringAndWrineTxt {
             System.out.println("Введите адрес видеофайла (если его нет просто нажимите enter)");
 
 //            if(sc.hasNext()) {
-                adres = sc.nextLine();
+            adres = sc.nextLine();
             if (adres.length() == 0) {
                 System.out.println("Фильма нет");
-            }
-            else {
+                adres = null;
+            } else {
                 System.out.println("Фильм находится по адресу: " + adres);
             }
-//            }
-//            else  {
-//                adres = null;
-//            }
 
             System.out.println("Введен адрес: " + adres);
 
-            // TODO ага вот тут касяк с массивом
-            // Заполняем нужными тегами
-//            list.set(0, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(0) + "</p>\n<hr id=\"system-readmore\" />");
-//            list.set(1, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(1) + "<br /><br />");
+//            // TODO ага вот тут касяк с массивом
+//            // Заполняем нужными тегами
+            list.set(0, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(0) + "</p>\n<hr id=\"system-readmore\" />");
+            list.set(1, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(1) + "<br /><br />");
 
-// TODO перевести в аррей лист в текст и записать в text
+            String c = "";
+
+            String[] myArray = {}; // конвертируем ArrayList в массив
+            myArray = list.toArray(new String[list.size()]);
+
+            for (int fff = 0; fff < 1; fff++) {
+                c = c + myArray[fff] + "\r\n";
+            }
+            for (int fff = 1; fff < myArray.length; fff++) {
+                c = c + myArray[fff];
+            }
+
+            text = c;
+
+//            me.setValue(c);
+//
+//
+//// TODO перевести в аррей лист в текст и записать в text
 
             //Задаем значение
             me.setValue(text);
             // Запись в файл
-            PrintWriter pw = new PrintWriter(new FileOutputStream(me.getKey().replaceAll(".doc","") + ".txt"));
+            PrintWriter pw = new PrintWriter(new FileOutputStream(me.getKey().replaceAll(".doc", "") + ".txt"));
             pw.println(me.getValue());
             pw.close();
         }
