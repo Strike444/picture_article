@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.util.*;
 
+import static ru.andreyshimanovich.picture_article.ResizeJpg.propJpg;
+
 /**
  * Created by Andrey Shimanovich on 20.06.16.
  */
@@ -76,46 +78,6 @@ public class ParseStringAndWrineTxt {
 
             }
 
-
-//                for (String s : textmas
-//                        ) {
-//                    while (s.matches("\\s.*")) {
-//                        System.out.println("Устраняю лишние пробелы");
-//                        s = s.replaceFirst("\\s.*", "");
-//                    }
-//                    // Не помню что делает
-//
-//                    s = s.replaceAll("[\\u00A0\\s]+", " ");
-//                    s = s.trim();
-//                    String b = "";
-//                    if (s.matches(".*\u0013 HYPERLINK.*\u0001\u0014.*\u0015.*")) {
-//                        System.out.println("!!! Нашел линк");
-//                        int pos = s.indexOf('\u0013');
-//                        int posend = s.indexOf('\u0001');
-//                        String substring = s.substring(pos + 13, posend - 1);
-//                        System.out.println(substring);
-//                        int posNaz = s.indexOf('\u0014');
-//                        int posNazEnd = s.indexOf('\u0015');
-//                        String substringNaz = s.substring(posNaz + 1, posNazEnd);
-//                        System.out.println(substringNaz);
-//                        String substringNach = s.substring(0, pos);
-//                        String substringConec = s.substring(posNazEnd + 1, s.length());
-////                System.out.println(substringNach + "#" + substringConec);
-//                        b = substringNach + "<a href=" + substring + "\">" + substringNaz + "</a>" + substringConec;
-////              System.out.println(text);
-//                        ;
-//                    }
-//                    s = b;
-//                }
-//
-//            for (String s : textmas
-//                    ) {
-//                System.out.println("$$$" + s);
-//            }
-
-
-//
-//
             System.out.println("Длинна массива обзатцев: " + textmas.length);
             ArrayList<String> list = new ArrayList<>();
 
@@ -160,7 +122,17 @@ public class ParseStringAndWrineTxt {
 
             System.out.println("Введен адрес: " + adres);
 
-//            // TODO ага вот тут касяк с массивом
+            // Получим значения миниатюр
+            if(propJpg.size() != 0) {
+                for (String s: propJpg
+                     ) {
+                    // Пока вывод аррей листа
+                    System.out.println(s);
+                }
+            }
+
+
+            //TODO для заполнения нужными тегами нужно знать параметры миниатюр
 //            // Заполняем нужными тегами
             list.set(0, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(0) + "</p>\n<hr id=\"system-readmore\" />");
             list.set(1, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(1) + "<br /><br />");
@@ -182,8 +154,6 @@ public class ParseStringAndWrineTxt {
 //            me.setValue(c);
 //
 //
-//// TODO перевести в аррей лист в текст и записать в text
-
             //Задаем значение
             me.setValue(text);
             // Запись в файл
