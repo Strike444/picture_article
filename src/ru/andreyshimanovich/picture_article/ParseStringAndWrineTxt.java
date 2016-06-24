@@ -147,18 +147,21 @@ public class ParseStringAndWrineTxt {
                 if (s.matches(".*glav.jpg.*")) {
                     System.out.println(s);
                     glavmin = s.replaceAll(".*glav.jpg,","");
-                    System.err.println(glavmin);
+                    System.out.println(glavmin);
                     String[] glavminar = glavmin.split(",");
                     glavmin = "width=\"" + glavminar[1] + " height=\"" + glavminar[0] +"\"";
-                    System.err.println(glavmin);
+                    System.out.println(glavmin);
                 }
             }
 
             // Получаем массив миниатюр без главного файла
 
-            ArrayList<String> minj = new ArrayList<String>();
+//            Map<Integer, String> minj = new HashMap<Integer, String>();
+            ArrayList<String> pathPlasProp = new ArrayList<String>();
+
+//            ArrayList<String> minj = new ArrayList<String>();
             for (int i = 0; i < propJpg.size(); i++) {
-                String str = Integer.toString(i);
+//                String str = Integer.toString(i);
                 String strWithoutPath = propJpg.get(i).substring(propJpg.get(i).length() - 14, propJpg.get(i).length()); //(".*\d+.jpg.*", "");
                 String nomer = null;
                 int nomerInt = -1;
@@ -167,23 +170,46 @@ public class ParseStringAndWrineTxt {
                     strWithoutPath = strWithoutPath.substring(1, strWithoutPath.length());
 //                    System.err.println(strWithoutPath);
                 }
+//                System.err.println(strWithoutPath);
+
                 if (strWithoutPath.matches("\\d.*")) {
                     nomer = strWithoutPath.substring(0,strWithoutPath.length()-12);
 //                    System.err.println("Номер " + nomer);
+                    pathPlasProp.add(nomer + strWithoutPath.substring(strWithoutPath.length() - 8,strWithoutPath.length()));
                 }
-
-                System.out.println(strWithoutPath + " " + nomer);
-                if (nomer.matches("\\d+")) {
-                    nomerInt = Integer.parseInt(nomer);
-                }
-
-                minj.add(nomerInt, strWithoutPath);
-//                 TODO ошибка возможно нужна сортировка
-//                if (propJpg.get(i).matches(".*" + str + ".jpg,"));
-//                System.err.println("Добовляю " + i + " " + propJpg.get(i));
             }
 
-            for (String s: minj
+            for (int i = 0; i < pathPlasProp.size(); i++) {
+                if(pathPlasProp.get(i).matches("^\\D+.*")) {
+                    pathPlasProp.remove(i);
+                }
+//                System.err.println(pathPlasProp.get(i));
+            }
+
+//            for (int i = 0; i < pathPlasProp.size(); i++) {
+//                System.err.println(pathPlasProp.get(i));
+//            }
+
+//            ArrayList<String> paramJpg = new ArrayList<String>();
+            String [] mapamJpgmas = new String[pathPlasProp.size()];
+            for (int i = 0; i < pathPlasProp.size(); i++) {
+                String[] mas = pathPlasProp.get(i).split(",");
+//                int index = pathPlasProp.indexOf(pathPlasProp.get(i));
+//                System.out.println(index);
+                int mas0 = Integer.parseInt(mas[0]);
+//                System.out.println("!!!!!!!!!" + mas0);
+
+                mapamJpgmas[mas0] = mas[0] + ".jpg\" width=\"" + mas[2] + "\" height=\"" + mas[1] + "\"";
+
+//                for (int j = 0; j < paramJpg.size(); j++) {
+//                    if (mas0 == i) {
+//                        System.err.println("есть контакт");
+//                        paramJpg.add(mas[0] + ".jpg\" width=\"" + mas[2] + "\" height=\"" + mas[1] + "\"");
+//                    }
+//                }
+            }
+
+            for (String s: mapamJpgmas
                  ) {
                 System.err.println(s);
             }
