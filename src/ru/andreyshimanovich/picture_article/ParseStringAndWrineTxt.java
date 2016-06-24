@@ -3,6 +3,7 @@ package ru.andreyshimanovich.picture_article;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static ru.andreyshimanovich.picture_article.ResizeJpg.propJpg;
@@ -129,6 +130,62 @@ public class ParseStringAndWrineTxt {
                     // Пока вывод аррей листа
                     System.out.println(s);
                 }
+            }
+
+            // Получаем дату
+            Date date = new Date();
+            System.out.println(date);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd_MM_yyyy");
+            System.out.println(simpleDateFormat.format(date));
+            String fdate = simpleDateFormat.format((date));
+
+            // Получаем значения миниатюр главного файла
+            String glavmin;
+
+            for (String s: propJpg
+                 ) {
+                if (s.matches(".*glav.jpg.*")) {
+                    System.out.println(s);
+                    glavmin = s.replaceAll(".*glav.jpg,","");
+                    System.err.println(glavmin);
+                    String[] glavminar = glavmin.split(",");
+                    glavmin = "width=\"" + glavminar[1] + " height=\"" + glavminar[0] +"\"";
+                    System.err.println(glavmin);
+                }
+            }
+
+            // Получаем массив миниатюр без главного файла
+
+            ArrayList<String> minj = new ArrayList<String>();
+            for (int i = 0; i < propJpg.size(); i++) {
+                String str = Integer.toString(i);
+                String strWithoutPath = propJpg.get(i).substring(propJpg.get(i).length() - 14, propJpg.get(i).length()); //(".*\d+.jpg.*", "");
+                String nomer = null;
+                int nomerInt = -1;
+//                System.err.println(strWithoutPath);
+                if (strWithoutPath.matches("\\D\\d.*")) {
+                    strWithoutPath = strWithoutPath.substring(1, strWithoutPath.length());
+//                    System.err.println(strWithoutPath);
+                }
+                if (strWithoutPath.matches("\\d.*")) {
+                    nomer = strWithoutPath.substring(0,strWithoutPath.length()-12);
+//                    System.err.println("Номер " + nomer);
+                }
+
+                System.out.println(strWithoutPath + " " + nomer);
+                if (nomer.matches("\\d+")) {
+                    nomerInt = Integer.parseInt(nomer);
+                }
+
+                minj.add(nomerInt, strWithoutPath);
+//                 TODO ошибка возможно нужна сортировка
+//                if (propJpg.get(i).matches(".*" + str + ".jpg,"));
+//                System.err.println("Добовляю " + i + " " + propJpg.get(i));
+            }
+
+            for (String s: minj
+                 ) {
+                System.err.println(s);
             }
 
 
