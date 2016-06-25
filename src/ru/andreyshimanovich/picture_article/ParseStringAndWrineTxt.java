@@ -28,6 +28,9 @@ public class ParseStringAndWrineTxt {
 
             String[] textmas = text.split("\r");
 
+
+
+
             // Длинна массива
 //           System.out.println("S" + textmas.length);
 //
@@ -36,19 +39,18 @@ public class ParseStringAndWrineTxt {
 //
 //
             for (int i = 0; i < textmas.length; i++) {
-                while (textmas[i].matches("\\s.*")) {
                     System.out.println("Устраняю лишние пробелы");
-                    textmas[i] = textmas[i].replaceFirst("\\s.*", "");
-                }
+//                    textmas[i] = textmas[i].trim();
+                    textmas[i] = textmas[i].replaceAll("\\s\\s+", " ");
             }
 
 
-            for (int i = 0; i < textmas.length; i++) {
-                while (textmas[i].matches("\\s.*")) {
-                    System.out.println("Устраняю лишние пробелы");
-                    textmas[i] = textmas[i].replaceFirst("\\s.*", "");
-                }
-            }
+//            for (int i = 0; i < textmas.length; i++) {
+//                while (textmas[i].matches("\\s.*")) {
+//                    System.out.println("Устраняю лишние пробелы");
+//                    textmas[i] = textmas[i].replaceFirst("\\s.*", "");
+//                }
+//            }
 
 
             for (int i = 0; i < textmas.length; i++) {
@@ -58,6 +60,14 @@ public class ParseStringAndWrineTxt {
             for (int i = 0; i < textmas.length; i++) {
                 textmas[i] = textmas[i].trim();
             }
+
+            // для проверки
+//            for(int i = 0; i<textmas.length; i++) {
+//                text = text + textmas[i] + "\r\n";
+//            }
+//            PrintWriter pww = new PrintWriter(new FileOutputStream(me.getKey().replaceAll(".doc", "") + "пример.txt"));
+//            pww.println(text);
+//            pww.close();
 
             for (int i = 0; i < textmas.length; i++) {
                 if (textmas[i].matches(".*\u0013 HYPERLINK.*\u0001\u0014.*\u0015.*")) {
@@ -211,14 +221,52 @@ public class ParseStringAndWrineTxt {
 
             for (String s: mapamJpgmas
                  ) {
-                System.err.println(s);
+                System.out.println(s);
             }
 
 
+            System.err.println("Длинна list " + list.size());
             //TODO для заполнения нужными тегами нужно знать параметры миниатюр
 //            // Заполняем нужными тегами
-            list.set(0, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(0) + "</p>\n<hr id=\"system-readmore\" />");
-            list.set(1, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(1) + "<br /><br />");
+            list.set(0, "<p style=\"line-height: normal; text-align: justify;\"><img src=\"images/stories/Glav/"
+                    + fdate + "/glav.jpg\" " + " style=\"margin: 5px; float: left;\" />"
+                    + list.get(0) + "</p>\n<hr id=\"system-readmore\" />");
+
+//            if (list.size() == 1) {
+//
+//            }
+
+            if (list.size() > 1) {
+                list.set(1, "<p style=\"line-height: normal; text-align: justify;\">" + list.get(1) + "<br /><br />");
+                for (int i = 2; i < list.size(); i++) {
+                    list.set(i, list.get(i) + "<br /><br />");
+                }
+            }
+
+            if (list.size() > 1) {
+                list.add("</p>\r\n");
+            }
+
+            list.add("<p>&nbsp;</p>\n\r");
+
+            if (adres != null) {
+                list.add("<p style=\"line-height: normal; text-align: center;\"><a href=\"" +
+                adres + "\"><span style=\"font-size: 14pt;\"><strong>Видеофильм</strong></span></a>\r\n</p>\r\n");
+            }
+
+            list.add("<table border=\"0\" align=\"center\">\r\n");
+            list.add("\t<tbody>\r\n");
+            list.add("\t\t<tbody>\r\n");
+
+
+            // TODO Нужно разбить массив на части по 4 элемента
+//            if (mapamJpgmas.length > 3) {
+//                for (int i = 0; i < 4; i ++) {
+//                    System.err.println(mapamJpgmas[i]);
+//                }
+//            }
+
+
 
             String c = "";
 
