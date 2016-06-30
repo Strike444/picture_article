@@ -135,10 +135,25 @@ public class ResizeJpg {
             System.out.println("Ширина картинки: " + scaleW);
             int scaleH = im.getHeight();
             System.out.println("Высота картинки: " + scaleH);
-            int newHmin = 150;
-            int newWmin = (150 * scaleW) / scaleH;
-            int newW = 1024;
-            int newH = (1024 * scaleH) / scaleW;
+
+            int newHmin;
+            int newWmin;
+            int newW;
+            int newH;
+
+
+            if (scaleW >= 1024) {
+                newHmin = 150;
+                newWmin = (150 * scaleW) / scaleH;
+                newW = 1024;
+                newH = (1024 * scaleH) / scaleW;
+            } else {
+                newHmin = 150;
+                newWmin = (150 * scaleW) / scaleH;
+                newW = scaleW;
+                newH = scaleH;
+            }
+
             System.out.println("Новая ширина для миниатюры: " + newWmin + "\n" + "Новая высота для миниатюры: " + newHmin);
             System.out.println("Новая ширина: " + newW + "\n" + "Новая высота: " + newH);
 

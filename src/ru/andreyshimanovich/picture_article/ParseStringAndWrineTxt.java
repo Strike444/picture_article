@@ -3,8 +3,6 @@ package ru.andreyshimanovich.picture_article;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -32,30 +30,11 @@ public class ParseStringAndWrineTxt {
 
             String[] textmas = text.split("\r");
 
-
-
-
-            // Длинна массива
-//           System.out.println("S" + textmas.length);
-//
-//            //            System.out.print("# " + me.getKey() + ": ");
-////            System.out.println("#" + me.getValue());
-//
-//
             for (int i = 0; i < textmas.length; i++) {
                     System.out.println("Устраняю лишние пробелы");
 //                    textmas[i] = textmas[i].trim();
                     textmas[i] = textmas[i].replaceAll("\\s\\s+", " ");
             }
-
-
-//            for (int i = 0; i < textmas.length; i++) {
-//                while (textmas[i].matches("\\s.*")) {
-//                    System.out.println("Устраняю лишние пробелы");
-//                    textmas[i] = textmas[i].replaceFirst("\\s.*", "");
-//                }
-//            }
-
 
             for (int i = 0; i < textmas.length; i++) {
                 textmas[i] = textmas[i].replaceAll("[\\u00A0\\s]+", " ");
@@ -270,32 +249,17 @@ public class ParseStringAndWrineTxt {
             x = Math.ceil(x);
 
             int ix = (int)x;
-            System.err.println(" foo " + ix);
+            System.err.println("Количество строк картинок: " + ix);
 
-            String[][] matrixA;
-            matrixA = new String[ix][4];
+//            String[][] matrixA;
+//            matrixA = new String[ix][4];
 
 
-            // TODO не правильно
             int kk = 0;
 
-//            System.err.println("dlinna " + mapamJpgmas.length);
-
-//            for (int i = 0; i < ix; i++) {
-//                for (int j = 0; j < 4; j++) {
-//                    if (k < mapamJpgmas[k].length() - 2) {
-//                        matrixA[j][i] = mapamJpgmas[k];
-////                        System.out.print(matrixA[j][i] + "\t");
-//                        k++;
-//                    } else {
-//                        matrixA[j][i] = null;
-//                    }
-//                }
-//            }
 
             for (int i = 0; i < ix; i++) {
-//                System.out.println("Ы");
-                System.err.println(mapamJpgmas.length);
+//                System.err.println(mapamJpgmas.length);
 
                 list.add("\t\t<tr>\r\n");
                 for (int j = 0; j < 4; j++) {
@@ -312,51 +276,6 @@ public class ParseStringAndWrineTxt {
             list.add("</table>");
 
             kk = 0;
-
-//            for (int i = 0; i < ix; i++) {
-//                System.out.println("Ы");
-//                for (int j = 0; j < 4; j++) {
-//                    System.out.print("Ы\t" +matrixA[i][j] + "\t");
-//                }
-//                System.out.println();
-//            }
-//
-
-
-
-//                for (int j = 0; j < 4; j++) {
-//                    if (k < mapamJpgmas[k].length()) {
-//                    matrixA[i][k] = mapamJpgmas[k];
-//                    System.out.print(matrixA[i][k] + "\t");
-//                        k++;
-//                    }
-//                    else {
-//                        matrixA[i][k] = null;
-//                        k++;
-//                    }
-//            }
-
-//                System.out.println();
-//            }
-
-
-//            int[] mas = new int[ix];
-//            int j = 0;
-//            for (int i = 0; i < mas.length; i++) {
-//                mas[i] = Integer.parseInt(mapamJpgmas[j]);
-//                j++;
-//                System.err.println(mas[i]);
-//            }
-
-
-            // TODO Нужно разбить массив на части по 4 элемента
-//            if (mapamJpgmas.length > 3) {
-//                for (int i = 0; i < 4; i ++) {
-//                    System.err.println(mapamJpgmas[i]);
-//                }
-//            }
-
-
 
             String c = "";
 
