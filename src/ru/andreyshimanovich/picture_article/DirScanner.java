@@ -87,16 +87,23 @@ public class DirScanner {
         File[] filesindir = f.listFiles();
         ArrayList<File> listfiles = new ArrayList<>();
         ArrayList<String> listdocfiles = new ArrayList<>();
+        int koljpg = 0;
         if (filesindir != null) {
             for (int i = 0; i < filesindir.length; i++) {
                 listfiles.add(i, filesindir[i]);
             }
             for (int i = 0; i < listfiles.size(); i++) {
                 if (listfiles.get(i).toString().matches(".*.jpg")) {
+                    koljpg++;
                     System.out.println(".jpg file: " + listfiles.get(i) + "\"");
                     listdocfiles.add(listfiles.get(i).toString());
                 }
             }
+            if (koljpg > 99) {
+                System.out.println("Фотографий больше чем 99\nВыхожу из программы.");
+                System.exit(0);
+            }
+
             String[] masJpg = listdocfiles.toArray(new String[listdocfiles.size()]);
             return masJpg;
         } else {
