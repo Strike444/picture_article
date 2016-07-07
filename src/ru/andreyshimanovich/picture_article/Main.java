@@ -25,5 +25,11 @@ public class Main {
         gt.sizePdoc();
         Map<String,String> arTxt = gt.paths(masDoc);
         ParseStringAndWrineTxt psawt = new ParseStringAndWrineTxt(arTxt);
+        DirScanner drj = new DirScanner();
+        String dirj = dr.PathDirScanner();
+        dr.lowNames(dirj);
+        MoveToFolder mtf = new MoveToFolder(drj.getMasJpg(dirj), dirj);
+//        new MoveToFolder(drj.getMasJpg(dirj, dirj));
+
     }
 }

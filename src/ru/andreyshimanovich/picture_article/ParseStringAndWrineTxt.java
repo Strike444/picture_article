@@ -208,8 +208,7 @@ public class ParseStringAndWrineTxt {
             }
 
 
-            System.err.println("Длинна list " + list.size());
-            //TODO для заполнения нужными тегами нужно знать параметры миниатюр
+//            System.err.println("Длинна list " + list.size());
 //            // Заполняем нужными тегами
             list.set(0, "<p style=\"line-height: normal; text-align: justify;\"><img src=\"images/stories/Glav/"
                     + fdate + "/glav.jpg\" " + " style=\"margin: 5px; float: left;\" />"
@@ -249,7 +248,7 @@ public class ParseStringAndWrineTxt {
             x = Math.ceil(x);
 
             int ix = (int)x;
-            System.err.println("Количество строк картинок: " + ix);
+//            System.err.println("Количество строк картинок: " + ix);
 
 //            String[][] matrixA;
 //            matrixA = new String[ix][4];
