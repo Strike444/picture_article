@@ -31,9 +31,9 @@ public class ParseStringAndWrineTxt {
             String[] textmas = text.split("\r");
 
             for (int i = 0; i < textmas.length; i++) {
-                    System.out.println("Устраняю лишние пробелы");
+                System.out.println("Устраняю лишние пробелы");
 //                    textmas[i] = textmas[i].trim();
-                    textmas[i] = textmas[i].replaceAll("\\s\\s+", " ");
+                textmas[i] = textmas[i].replaceAll("\\s\\s+", " ");
             }
 
             for (int i = 0; i < textmas.length; i++) {
@@ -117,9 +117,9 @@ public class ParseStringAndWrineTxt {
             System.out.println("Введен адрес: " + adres);
 
             // Получим значения миниатюр
-            if(propJpg.size() != 0) {
-                for (String s: propJpg
-                     ) {
+            if (propJpg.size() != 0) {
+                for (String s : propJpg
+                        ) {
                     // Пока вывод аррей листа
                     System.out.println(s);
                 }
@@ -133,16 +133,16 @@ public class ParseStringAndWrineTxt {
             String fdate = simpleDateFormat.format((date));
 
             // Получаем значения миниатюр главного файла
-            String glavmin;
+            String glavmin = "ы";
 
-            for (String s: propJpg
-                 ) {
+            for (String s : propJpg
+                    ) {
                 if (s.matches(".*glav.jpg.*")) {
                     System.out.println(s);
-                    glavmin = s.replaceAll(".*glav.jpg,","");
+                    glavmin = s.replaceAll(".*glav.jpg,", "");
                     System.out.println(glavmin);
                     String[] glavminar = glavmin.split(",");
-                    glavmin = "width=\"" + glavminar[1] + " height=\"" + glavminar[0] +"\"";
+                    glavmin = "width=\"" + glavminar[1] + " height=\"" + glavminar[0] + "\"";
                     System.out.println(glavmin);
                 }
             }
@@ -166,14 +166,14 @@ public class ParseStringAndWrineTxt {
 //                System.err.println(strWithoutPath);
 
                 if (strWithoutPath.matches("\\d.*")) {
-                    nomer = strWithoutPath.substring(0,strWithoutPath.length()-12);
+                    nomer = strWithoutPath.substring(0, strWithoutPath.length() - 12);
 //                    System.err.println("Номер " + nomer);
-                    pathPlasProp.add(nomer + strWithoutPath.substring(strWithoutPath.length() - 8,strWithoutPath.length()));
+                    pathPlasProp.add(nomer + strWithoutPath.substring(strWithoutPath.length() - 8, strWithoutPath.length()));
                 }
             }
 
             for (int i = 0; i < pathPlasProp.size(); i++) {
-                if(pathPlasProp.get(i).matches("^\\D+.*")) {
+                if (pathPlasProp.get(i).matches("^\\D+.*")) {
                     pathPlasProp.remove(i);
                 }
 //                System.err.println(pathPlasProp.get(i));
@@ -184,7 +184,7 @@ public class ParseStringAndWrineTxt {
 //            }
 
 //            ArrayList<String> paramJpg = new ArrayList<String>();
-            String [] mapamJpgmas = new String[pathPlasProp.size()];
+            String[] mapamJpgmas = new String[pathPlasProp.size()];
             for (int i = 0; i < pathPlasProp.size(); i++) {
                 String[] mas = pathPlasProp.get(i).split(",");
 //                int index = pathPlasProp.indexOf(pathPlasProp.get(i));
@@ -202,16 +202,16 @@ public class ParseStringAndWrineTxt {
 //                }
             }
 
-            for (String s: mapamJpgmas
-                 ) {
-                System.out.println(s);
+            for (String s : mapamJpgmas
+                    ) {
+                System.out.println(s + " Размеры для файлов");
             }
 
 
 //            System.err.println("Длинна list " + list.size());
 //            // Заполняем нужными тегами
             list.set(0, "<p style=\"line-height: normal; text-align: justify;\"><img src=\"images/stories/Glav/"
-                    + fdate + "/glav.jpg\" " + " style=\"margin: 5px; float: left;\" />"
+                    + fdate + "/glav.jpg\" " + glavmin + " style=\"margin: 5px; float: left;\" />"
                     + list.get(0) + "</p>\n<hr id=\"system-readmore\" />");
 
 //            if (list.size() == 1) {
@@ -233,7 +233,7 @@ public class ParseStringAndWrineTxt {
 
             if (adres != null) {
                 list.add("<p style=\"line-height: normal; text-align: center;\"><a href=\"" +
-                adres + "\"><span style=\"font-size: 14pt;\"><strong>Видеофильм</strong></span></a>\r\n</p>\r\n");
+                        adres + "\"><span style=\"font-size: 14pt;\"><strong>Видеофильм</strong></span></a>\r\n</p>\r\n");
             }
 
             list.add("<table border=\"0\" align=\"center\">\r\n");
@@ -247,7 +247,7 @@ public class ParseStringAndWrineTxt {
 
             x = Math.ceil(x);
 
-            int ix = (int)x;
+            int ix = (int) x;
 //            System.err.println("Количество строк картинок: " + ix);
 
 //            String[][] matrixA;
@@ -262,12 +262,12 @@ public class ParseStringAndWrineTxt {
 
                 list.add("\t\t<tr>\r\n");
                 for (int j = 0; j < 4; j++) {
-                        if (kk < mapamJpgmas.length) {
+                    if (kk < mapamJpgmas.length) {
 //                            System.err.println("K равно: " + kk);
-                            list.add("\t\t\t<td><img src=\"images/stories/Glav/" + fdate + "/" + mapamJpgmas[kk] + "/>\r\n");
-                            kk++;
-                        }
+                        list.add("\t\t\t<td><img src=\"images/stories/Glav/" + fdate + "/" + mapamJpgmas[kk] + "/>\r\n");
+                        kk++;
                     }
+                }
                 list.add("\t\t</tr>\r\n");
 //                    System.out.println("э");
             }
