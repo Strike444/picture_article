@@ -142,7 +142,7 @@ public class ParseStringAndWrineTxt {
                     glavmin = s.replaceAll(".*glav.jpg,", "");
                     System.out.println(glavmin);
                     String[] glavminar = glavmin.split(",");
-                    glavmin = "width=\"" + glavminar[1] + " height=\"" + glavminar[0] + "\"";
+                    glavmin = "width=\"" + glavminar[1] + "\" height=\"" + glavminar[0] + "\"";
                     System.out.println(glavmin);
                 }
             }
